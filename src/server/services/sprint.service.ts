@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Prisma } from "@/generated/prisma/client";
 import { db } from "@/server/db";
+import { delayDatabaseRead } from "@/server/db-read-delay";
 import { ServiceError } from "@/server/service-error";
 import { assertProjectMember } from "./project.service";
 
@@ -18,7 +19,9 @@ type SprintTransition = {
   sprintId: string;
 };
 
-export function getProjectSprints(projectId: string, userId: string) {
+export async function getProjectSprints(projectId: string, userId: string) {
+  await delayDatabaseRead();
+
   return db.sprint.findMany({
     where: { projectId, project: { members: { some: { userId } } } },
     orderBy: { startDate: "asc" },

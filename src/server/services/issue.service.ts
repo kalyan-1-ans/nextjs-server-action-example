@@ -2,6 +2,7 @@ import "server-only";
 
 import type { IssueStatus, IssueType, Prisma } from "@/generated/prisma/client";
 import { db } from "@/server/db";
+import { delayDatabaseRead } from "@/server/db-read-delay";
 import { ServiceError } from "@/server/service-error";
 import { createAssignmentNotification } from "./notification.service";
 import { assertProjectMember } from "./project.service";
@@ -25,7 +26,9 @@ type MoveIssueInput = {
   beforeId?: string;
 };
 
-export function getProjectIssues(projectId: string, userId: string) {
+export async function getProjectIssues(projectId: string, userId: string) {
+  await delayDatabaseRead();
+
   return db.issue.findMany({
     where: { projectId, project: { members: { some: { userId } } } },
     include: { assignee: { select: { name: true } }, reporter: { select: { name: true } } },

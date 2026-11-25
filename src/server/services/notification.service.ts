@@ -2,8 +2,11 @@ import "server-only";
 
 import type { Prisma } from "@/generated/prisma/client";
 import { db } from "@/server/db";
+import { delayDatabaseRead } from "@/server/db-read-delay";
 
-export function getNotificationsForUser(userId: string) {
+export async function getNotificationsForUser(userId: string) {
+  await delayDatabaseRead();
+
   return db.notification.findMany({
     where: { userId, issue: { project: { members: { some: { userId } } } } },
     select: { id: true, message: true, read: true },

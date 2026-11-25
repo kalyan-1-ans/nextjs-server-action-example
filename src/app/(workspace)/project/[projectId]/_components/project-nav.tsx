@@ -1,16 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { LayoutDashboard, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function ProjectNav({
-  projectId,
-  board,
-  hasActive,
-}: {
-  projectId: string;
-  board: boolean;
-  hasActive: boolean;
-}) {
+export function ProjectNav({ projectId, hasActive }: { projectId: string; hasActive: boolean }) {
+  const board = useSelectedLayoutSegment() === "active";
+
   const itemClass = "flex items-center gap-3 rounded-md p-3 text-sm hover:bg-gray-100";
 
   return (

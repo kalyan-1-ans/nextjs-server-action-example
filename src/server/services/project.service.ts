@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Prisma } from "@/generated/prisma/client";
 import { db } from "@/server/db";
+import { delayDatabaseRead } from "@/server/db-read-delay";
 import { ServiceError } from "@/server/service-error";
 
 export function getProjectForUser(projectId: string, userId: string) {
@@ -17,7 +18,9 @@ const projectSummarySelect = {
   _count: { select: { issues: true } },
 } satisfies Prisma.ProjectSelect;
 
-export function getOwnedProjectsForUser(userId: string) {
+export async function getOwnedProjectsForUser(userId: string) {
+  await delayDatabaseRead();
+
   return db.project.findMany({
     where: { ownerId: userId, members: { some: { userId } } },
     select: projectSummarySelect,
@@ -25,7 +28,9 @@ export function getOwnedProjectsForUser(userId: string) {
   });
 }
 
-export function getAssociatedProjectsForUser(userId: string) {
+export async function getAssociatedProjectsForUser(userId: string) {
+  await delayDatabaseRead();
+
   return db.project.findMany({
     where: { ownerId: { not: userId }, members: { some: { userId } } },
     select: projectSummarySelect,

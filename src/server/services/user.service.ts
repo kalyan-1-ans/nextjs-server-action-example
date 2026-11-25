@@ -3,6 +3,7 @@ import "server-only";
 import type { Prisma } from "@/generated/prisma/client";
 import { verifyPassword } from "@/lib/password";
 import { db } from "@/server/db";
+import { delayDatabaseRead } from "@/server/db-read-delay";
 import { ServiceError } from "@/server/service-error";
 
 export async function authenticateUser(username: string, password: string) {
@@ -32,6 +33,8 @@ export async function updateUserProfile(userId: string, data: { name: string }) 
 }
 
 export async function getProjectMembers(projectId: string, userId: string) {
+  await delayDatabaseRead();
+
   const memberships = await db.membership.findMany({
     where: { projectId, project: { members: { some: { userId } } } },
     select: { user: { select: { id: true, name: true } } },

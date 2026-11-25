@@ -1,7 +1,7 @@
-import { ProjectView } from "./_components/project-view";
+import { ProjectWorkspace } from "./_components/project-workspace";
 
 export const metadata = { title: "Issues" };
 
 export default function Page({ params }: { params: Promise<{ projectId: string }> }) {
-  return <ProjectView params={params} mode="backlog" />;
+  return <ProjectWorkspace params={params} mode="backlog" />;
 }
