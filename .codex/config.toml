@@ -1,0 +1,17 @@
+[mcp_servers.context7]
+command = "npx"
+args = [
+  "-y",
+  "--registry=https://registry.npmjs.org",
+  "--userconfig=/dev/null",
+  "@upstash/context7-mcp",
+]
+
+[mcp_servers.next-devtools]
+command = "npx"
+args = [
+  "-y",
+  "--registry=https://registry.npmjs.org",
+  "--userconfig=/dev/null",
+  "next-devtools-mcp@latest",
+]

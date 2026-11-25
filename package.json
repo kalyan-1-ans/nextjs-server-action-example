@@ -1,0 +1,57 @@
+{
+  "name": "jura-server-actions",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "prisma generate && next build --webpack",
+    "start": "next start",
+    "lint": "oxlint",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:setup": "node scripts/prepare-db.mjs && prisma generate && prisma migrate deploy && prisma db seed",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@base-ui/react": "latest",
+    "@prisma/adapter-better-sqlite3": "^7",
+    "@prisma/client": "^7",
+    "@tanstack/react-form": "^1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2",
+    "dotenv": "^17",
+    "jotai": "^2",
+    "lucide-react": "latest",
+    "next": "^16.4.6",
+    "next-auth": "beta",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "server-only": "latest",
+    "tailwind-merge": "^3",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "postcss": "^8",
+    "prisma": "^7",
+    "tailwindcss": "^4",
+    "tsx": "latest",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "effect": "3.22.5"
+    }
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
