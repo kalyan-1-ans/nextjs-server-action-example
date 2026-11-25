@@ -3,5 +3,5 @@ import "server-only";
 import { setTimeout } from "node:timers/promises";
 
 export function delayDatabaseRead() {
-  return setTimeout(5_000);
+  return setTimeout(1_000);
 }
