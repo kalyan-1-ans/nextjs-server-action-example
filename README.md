@@ -34,7 +34,7 @@ Actions authenticate and validate each write. Services own scoped Prisma queries
 
 Cache Components and partial prefetching are enabled, but application data reads are not cached. Reads stream at request time behind Suspense, making this the baseline for `nextjs-cache-component-private-example`.
 
-Content reads wait **1 second** before querying SQLite. Adjust or disable the delay in `src/server/db-read-delay.ts`. Authentication checks and writes are not delayed. Use `npm run build` and `npm start` to compare production navigation behavior.
+Content reads wait **2 seconds** before querying SQLite. Adjust or disable the delay in `src/server/db-read-delay.ts`. Authentication checks and writes are not delayed. Use `npm run build` and `npm start` to compare production navigation behavior.
 
 ## Useful commands
 
